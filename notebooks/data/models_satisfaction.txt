@@ -1,0 +1,67 @@
+M0 (living and education)
+                      feature   gewicht     wert  gewicht * wert
+0             Country_Ireland -0.142113      0.0       -0.000000
+1            EdLevel_Doctoral -0.082620      0.0       -0.000000
+2                   OpSys_Mac -0.080362      0.0       -0.000000
+3             Country_Belgium -0.046077      0.0       -0.000000
+4              Country_France -0.034068      0.0       -0.000000
+5                         Age -0.016597     31.0       -0.514493
+6              EdLevel_Master -0.005939      0.0       -0.000000
+7               ConvertedComp  0.000003  35028.0        0.104150
+8                  Age1stCode  0.006431     18.0        0.115754
+9                   YearsCode  0.008599     13.0        0.111788
+10      Country_UnitedKingdom  0.010766      1.0        0.010766
+11            Country_Austria  0.013686      0.0        0.000000
+12            Country_Germany  0.016281      0.0        0.000000
+13        Country_Netherlands  0.030236      0.0        0.000000
+14     NEWJobHunt_Stressedout  0.032058      1.0        0.032058
+15             Country_Canada  0.033947      0.0        0.000000
+16              EdLevel_Other  0.043538      1.0        0.043538
+17           EdLevel_Bachelor  0.045022      0.0        0.000000
+18  LanguageWorkedWith_Python  0.067881      0.0        0.000000
+19                 JobSeek_No  0.072552      0.0        0.000000
+20          JobFactors_Career  0.102667      0.0        0.000000
+21          JobFactors_Domain  0.109293      1.0        0.109293
+22            Country_Finland  0.117342      0.0        0.000000
+Intercept: 3.8115497794606963
+
+
+M1 (education)
+                   feature   gewicht      wert  gewicht * wert
+0   NEWJobHunt_Stressedout -0.109272       0.0       -0.000000
+1           MainBranch_Dev -0.078833       1.0       -0.078833
+2                      Age -0.016926      47.0       -0.795540
+3            EdLevel_Other -0.004203       0.0       -0.000000
+4           EdLevel_Master -0.001040       0.0       -0.000000
+5            ConvertedComp  0.000003  116333.0        0.354703
+6         EdLevel_Doctoral  0.001994       0.0        0.000000
+7         EdLevel_Bachelor  0.003248       1.0        0.003248
+8               Age1stCode  0.006452      14.0        0.090331
+9                YearsCode  0.008940      18.0        0.160916
+10  NEWJobHunt_Situational  0.185527       0.0        0.000000
+Intercept: 4.0162496646569155
+
+
+M2 (where to live with a masters)
+                  feature   gewicht     wert  gewicht * wert
+0         Country_Austria -0.101629      0.0       -0.000000
+1          NEWLearn_Month -0.072531      0.0       -0.000000
+2         Country_Germany -0.037825      0.0       -0.000000
+3                     Age -0.014276     24.0       -0.342629
+4        EdLevel_Doctoral -0.013125      1.0       -0.013125
+5         Country_Finland -0.012027      0.0       -0.000000
+6   Country_UnitedKingdom -0.011454      1.0       -0.011454
+7        EdLevel_Bachelor -0.004423      0.0       -0.000000
+8           ConvertedComp  0.000003  27805.0        0.083661
+9          EdLevel_Master  0.005110      0.0        0.000000
+10              YearsCode  0.005832      6.0        0.034994
+11          EdLevel_Other  0.012437      0.0        0.000000
+12        Country_Belgium  0.014468      0.0        0.000000
+13         Country_France  0.026738      0.0        0.000000
+14         Country_Canada  0.027229      0.0        0.000000
+15        Country_Ireland  0.036132      0.0        0.000000
+16    Country_Netherlands  0.058369      0.0        0.000000
+Intercept: 4.014224530399622
+
+
+
