@@ -61,3 +61,6 @@ Download the repository and start the jupyter session
   Additionaly the poll data (survey_results_public.csv and
   survey_results_schema.csv) needs to be unzipped under
   ./notebooks/data/2020 and ./notebooks/data/2019 respectively
+
+Beside matplotlib in Python, Rapidminer and Datawrapper were used to
+build several visualisations.
