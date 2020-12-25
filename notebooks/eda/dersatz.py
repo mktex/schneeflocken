@@ -6,23 +6,29 @@ import pandas as pd
 
 from eda import dbeschreiben
 
-xfErsatzNullWerteDurchMean = lambda xdfIN: xdfIN.fillna(value=xdfIN.mean())
-xfErsatzNullWerteDurchMedian = lambda xdfIN: xdfIN.fillna(value=xdfIN.median())
+xfErsatzNullWerteDurchMean = lambda xdf_in: xdf_in.fillna(value=xdf_in.mean())
+xfErsatzNullWerteDurchMedian = lambda xdf_in: xdf_in.fillna(value=xdf_in.median())
 
 
-def datenbestand_spalten(xdfInput, xcol):
+def datenbestand_spalten(xdf_input, xcol):
     """ Entsprechend Nullwerte in xcol, spalte den Datenbestand in 2 Gruppen
     """
-    xdf = xdfInput.copy()
-    xdf[xcol + "_istNull"] = [np.isnan(t) if 'float' in str(type(t)) else False for t in xdf[xcol].values.tolist()]
-    print(xdf[[xcol, xcol + "_istNull"]])
-    xdf_fehlend = xdf[xdf[xcol + "_istNull"] == True]
-    xdf_vorhanden = xdf[xdf[xcol + "_istNull"] == False]
+    xdf_temp = xdf_input.copy()
+    xdf_temp[xcol + "_istNull"] = [np.isnan(t) if 'float' in str(type(t)) else False for t in xdf_temp[xcol].values.tolist()]
+    print(xdf_temp[[xcol, xcol + "_istNull"]])
+
+    print(type(xdf_temp[xcol + "_istNull"].values[3]), xdf_temp[xcol + "_istNull"].values[3] is False)
+    xdf_vorhanden = xdf_temp[list(map(lambda x: bool(x) is False, xdf_temp[xcol + "_istNull"].values))]
+    xdf_fehlend = xdf_temp[list(map(lambda x: bool(x) is True, xdf_temp[xcol + "_istNull"].values))]
+
     print("[x] Unterschied zwischen den zwei Gruppen:")
-    print("\n Gruppe ohne fehlenden Daten (A) in {}".format(xcol))
+
+    print("\n Gruppe ohne fehlenden Daten (Gruppe A) in {}".format(xcol))
     print(xdf_vorhanden.describe())
-    print("\n Gruppe mit fehlenden Daten (B) in {}".format(xcol))
+
+    print("\n Gruppe mit fehlenden Daten (Gruppe B) in {}".format(xcol))
     print(xdf_fehlend.describe())
+
     print("[x] Prozent der Nullwerte pro Feature:")
     xcols_cluster = xdf_vorhanden.describe().columns.tolist()
     xnullwerte_a = [(xc, dbeschreiben.xProzentNullen(xdf_vorhanden, xc)) for xc in xcols_cluster]
@@ -39,16 +45,16 @@ def datenbestand_spalten(xdfInput, xcol):
     return xdf_vorhanden, xdf_fehlend, xnullwerte_a, xnullwerte_b
 
 
-def ersatz_mit_knn(xdfInput, xcol="CareerSatisfaction", ignoriere_spalten=["id"],
-                   thresholdNullWerteCluster=0.7, nclust=3):
+def ersatz_mit_knn(xdf_input, xcol="CareerSatisfaction", ignoriere_spalten=["id"],
+                   threshold_null_werte_cluster=0.7, nclust=3):
     """ Für jede Zeile, die NAN Werte hat, findet dijenigen Datensätze,
         die in einem Cluster zusammengehören
-        thresholdNullWerteCluster:
+        threshold_null_werte_cluster:
             Feature für Clustering nicht verwenden, wenn die Nullwerte mehr als so viel Prozent betragen
 
     """
     print("=============================================================================================")
-    xdf = xdfInput[list(filter(lambda x: x not in ignoriere_spalten, xdfInput.columns))].copy()
+    xdf = xdf_input[list(filter(lambda x: x not in ignoriere_spalten, xdf_input.columns))].copy()
     if '__cluster__' in xdf.columns:
         print("[x] Intern wird __cluster__ Feld verwendet!")
         return
@@ -56,8 +62,8 @@ def ersatz_mit_knn(xdfInput, xcol="CareerSatisfaction", ignoriere_spalten=["id"]
     xdf_vorhanden, xdf_fehlend, xnwa, xnwb = datenbestand_spalten(xdf, xcol)
     xcols_cluster = xdf_vorhanden.describe().columns.tolist()
     xcols_cluster = list(filter(lambda x: x != xcol, xcols_cluster))
-    xcols_cluster = list(filter(lambda x: xnwa[x] <= thresholdNullWerteCluster and
-                                          xnwb[x] <= thresholdNullWerteCluster,
+    xcols_cluster = list(filter(lambda x: xnwa[x] <= threshold_null_werte_cluster and
+                                          xnwb[x] <= threshold_null_werte_cluster,
                                 xcols_cluster))
     # xcols_cluster.sort()
     np.random.seed()
@@ -68,7 +74,7 @@ def ersatz_mit_knn(xdfInput, xcol="CareerSatisfaction", ignoriere_spalten=["id"]
 
     # TODO: Übergabe an xKMeans
     anzahl_cluster = nclust
-    clf = cluster.KMeans(n_clusters=anzahl_cluster) # random_state=42
+    clf = cluster.KMeans(n_clusters=anzahl_cluster)  # random_state=42
     clf.fit(xdf_vorhanden[xcols_cluster].values)
     xdf_vorhanden['__cluster__'] = clf.labels_
 
@@ -95,14 +101,13 @@ def ersatz_mit_knn(xdfInput, xcol="CareerSatisfaction", ignoriere_spalten=["id"]
 
     print("\n [x] Wenn alles gut gelaufen ist, haben sich die statistischen Maßen nicht wesentlich geändert:")
     print("\t VORHER:")
-    print(xdfInput.describe())
+    print(xdf_input.describe())
     print("\n\t NACHHER:")
     print(xdf_res.describe())
 
     xdf_res = xdf_res[list(filter(lambda x: x != '__cluster__' and x != (xcol + "_istNull"), xdf_res.columns))]
     for xc in ignoriere_spalten:
-        xdf_res[xc] = xdfInput[xc]
+        xdf_res[xc] = xdf_input[xc]
 
     print("=============================================================================================")
     return xdf_res, clf
-

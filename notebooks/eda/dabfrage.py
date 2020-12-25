@@ -9,21 +9,21 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_squared_error
 
 
-def mit_lm(xdfInput, xselekt_cols, xtarget, outputs=True, do_norm=True, shuffle_cols = False):
+def mit_lm(xdf_input, xselekt_cols, xtarget, outputs=True, do_norm=True, shuffle_cols=False):
     """
         Erkläre die Beziehung zwischen Zielvariable und ausgewählten numerische Werte anhand eines LM
         Beispiel:
             xselekt_cols=['CareerSatisfaction', 'HoursPerWeek', 'JobSatisfaction', 'StackOverflowSatisfaction']
             mit_lm(xdfInput, xselekt_cols, xtarget = "Salary")
     """
-    dfres = xdfInput.copy()
+    dfres = xdf_input.copy()
     dfres = dfres.reset_index(drop=True)
     if shuffle_cols:
         np.random.shuffle(xselekt_cols)
     X = dfres[xselekt_cols]
     y = dfres[xtarget]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.30) # random_state=42
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.30)  # random_state=42
     lm_model = LinearRegression(normalize=do_norm)
     lm_model.fit(X_train, y_train)
     xpred = lm_model.predict(X)
@@ -37,7 +37,7 @@ def mit_lm(xdfInput, xselekt_cols, xtarget, outputs=True, do_norm=True, shuffle_
     xcoeffsDF = pd.DataFrame({
         "feature": xselekt_cols,
         "gewicht": lm_model.coef_
-    });
+    })
     grundwert = lm_model.intercept_
     xcoeffsDF = xcoeffsDF.sort_values(by="gewicht")
     xcoeffsDF = xcoeffsDF.reset_index(drop=True)
@@ -49,7 +49,7 @@ def mit_lm(xdfInput, xselekt_cols, xtarget, outputs=True, do_norm=True, shuffle_
         print(Xvis.describe())
         print("R^2 {}".format(r2_perf))
         print("RMSE {}".format(rmse_perf))
-        f, ax = plt.subplots(figsize=(10, 8))
+        _ = plt.subplots(figsize=(10, 8))
         Xvis.delta.hist(grid=False, bins=50)
         plt.title("delta = IST - Voraussage")
         plt.tight_layout()
@@ -63,7 +63,8 @@ def mit_lm(xdfInput, xselekt_cols, xtarget, outputs=True, do_norm=True, shuffle_
 
     return Xvis, r2_perf, rmse_perf, xcoeffsDF, grundwert
 
-def kateg_felder_schwellenwert_auswahl_mit_lm(xdfcat_dummy, target, starte_ab = 0.8, do_plot=True):
+
+def kateg_felder_schwellenwert_auswahl_mit_lm(xdfcat_dummy, target, starte_ab=0.8, do_plot=True):
     """ Ergibt eine Liste von ausgewählten Features, die ein LM Modell optimieren
         target: eine Spalte wird in xdf_cat mit pd.merge() eingebunden
         BeispieL:
@@ -75,7 +76,8 @@ def kateg_felder_schwellenwert_auswahl_mit_lm(xdfcat_dummy, target, starte_ab = 
     # Für die kategorialen Variablen: np.where((X.sum() > cutoff) == True)[0] ergibt die Spalten-Indexen
     X = xdfcat_dummy.copy()
     xtarget = target.columns[0]
-    xL = []; dict_coefs = {}
+    xL = []
+    dict_coefs = {}
     while starte_ab > 0.0:
         cutoff = starte_ab * X.shape[0]
         xselekt_cols = [X.columns[t] for t in np.where((X.sum() > cutoff) == True)[0]]
@@ -104,14 +106,14 @@ def kateg_felder_schwellenwert_auswahl_mit_lm(xdfcat_dummy, target, starte_ab = 
     return xLdf, dict_coefs, u[u == u.max()].index[0]
 
 
-def simulation_lm(xdfInput, xselekt_cols, xtarget, nsim=300):
+def simulation_lm(xdf_input, xselekt_cols, xtarget, nsim=300):
     """ Gegeben eine Auswahl an Features,
         führt den LM mehrmals aus und findet die Durchschnittliche Werte für die Parameters des Modells
     """
     if True:
         xL = []
         for simk in range(nsim):
-            _ = mit_lm(xdfInput, xselekt_cols, xtarget, outputs=False, do_norm=False, shuffle_cols=True)
+            _ = mit_lm(xdf_input, xselekt_cols, xtarget, outputs=False, do_norm=False, shuffle_cols=True)
             Xvis, r2_perf, rmse_perf, xcoeffsDF, grundwert = _
             xL.append([r2_perf, rmse_perf, xcoeffsDF, grundwert])
         xdict_cols = {}
@@ -158,8 +160,8 @@ def do_lm_berechnung(xrecord, xtarget, parameter_means, voraussage=False):
 
 
 # Beispiel Datesätze
-def zeige_lm_berechnung(xdfInput, xselekt_cols, xtarget, parameter_means):
-    xrecord = xdfInput[xselekt_cols + [xtarget]].sample(10).iloc[5].to_dict()
+def zeige_lm_berechnung(xdf_input, xselekt_cols, xtarget, parameter_means):
+    xrecord = xdf_input[xselekt_cols + [xtarget]].sample(10).iloc[5].to_dict()
     xformel, x, b = do_lm_berechnung(xrecord, xtarget, parameter_means)
     print(xformel)
     print("\n")
@@ -167,5 +169,3 @@ def zeige_lm_berechnung(xdfInput, xselekt_cols, xtarget, parameter_means):
     print("\tGrundwert   : ", b)
     print("\t          =>  ", x + b)
     print("\tTatsächlich : ", xrecord[xtarget])
-
-
