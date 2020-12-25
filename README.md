@@ -6,6 +6,9 @@
 
 ### About
 
+Blog post:  
+http://machine-learning.bfht.eu/so-what-would-be-a-good-fair-price-for-a-data-scientist
+
 The jupyter notebook was used to analyse data from StackOverflow polls
 from 2019 and 2020 with the aim at answering questions related to
 average income and job satisfaction of data scientists
@@ -64,5 +67,3 @@ Download the repository and start the jupyter session
 
 Beside matplotlib in Python, Rapidminer and Datawrapper were used to
 build several visualisations.
-
-Blog post: http://machine-learning.bfht.eu/so-what-would-be-a-good-fair-price-for-a-data-scientist
