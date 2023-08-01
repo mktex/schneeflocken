@@ -1,0 +1,94 @@
+M0 (basics):
+                  feature      gewicht  wert  gewicht * wert
+0     JobFactors_Idealist -1961.051241   0.0       -0.000000
+1              Age1stCode  -557.237369  14.0    -7801.323169
+2                     Age   753.846503  26.0    19600.009069
+3             WorkWeekHrs   813.194034  35.0    28461.791181
+4            YearsCodePro   832.918086   3.0     2498.754259
+5    LanguageWorkedWith_C  1657.932921   0.0        0.000000
+6  NEWJobHunt_Stressedout  1907.220273   0.0        0.000000
+Intercept: 6024.849766773016
+
+
+
+M1 (self agency):
+                         feature       gewicht  wert  gewicht * wert
+0            Employment_Fulltime -11707.215313   1.0   -11707.215313
+1            Employment_Parttime -11495.308292   0.0       -0.000000
+2         NEWJobHunt_Stressedout  -1213.012403   1.0    -1213.012403
+3                     Age1stCode   -566.708411  16.0    -9067.334581
+4                            Age    760.060598  22.0    16721.333167
+5                    WorkWeekHrs    810.130523  40.0    32405.220923
+6                   YearsCodePro    825.149140   4.0     3300.596560
+7       LanguageWorkedWith_Other   1355.186825   1.0     1355.186825
+8             OrgSize_Empl50010k   2202.997805   0.0        0.000000
+9          JobFactors_Itsasecret   6601.157276   0.0        0.000000
+10               Country_Ireland   7993.587038   1.0     7993.587038
+11      PurchaseWhat_NoInfluence   9969.125399   0.0        0.000000
+12    PurchaseWhat_SomeInfluence  10515.170009   0.0        0.000000
+13  PurchaseWhat_StrongInfluence  10985.516219   1.0    10985.516219
+Intercept: 6099.068614290785
+
+
+M2 (company type):
+                      feature       gewicht  wert  gewicht * wert
+0     LanguageWorkedWith_Ruby  -3053.922851   0.0       -0.000000
+1      NEWJobHunt_Stressedout  -3007.289409   1.0    -3007.289409
+2             NEWLearn_Decade  -1964.082331   1.0    -1964.082331
+3   LanguageWorkedWith_Python  -1706.800874   1.0    -1706.800874
+4                  Age1stCode   -582.108276  17.0    -9895.840685
+5                         Age    766.853858  44.0    33741.569744
+6                YearsCodePro    808.072086  24.0    19393.730055
+7                 WorkWeekHrs    813.867590  40.0    32554.703595
+8        LanguageWorkedWith_R   1681.180494   0.0        0.000000
+9            NEWJobHunt_Nomad   2081.489149   0.0        0.000000
+10  LanguageWorkedWith_Kotlin   3626.508920   0.0        0.000000
+11          OrgSize_Empl20500   5998.250806   0.0        0.000000
+12           OrgSize_Empl10kp   6076.410573   1.0     6076.410573
+13            OrgSize_Empl219   7348.330435   0.0        0.000000
+14         OrgSize_Empl50010k   8189.637822   0.0        0.000000
+15         OrgSize_Onemanshow  11245.979826   0.0        0.000000
+Intercept: 629.2067373168551
+
+
+M3 (motivation to leave):
+                          feature       gewicht  wert  gewicht * wert
+0                 NEWJobHunt_Cash  -2767.574074   1.0    -2767.574074
+1                      Age1stCode   -555.775338  11.0    -6113.528716
+2                             Age    753.028907  39.0    29368.127360
+3                     WorkWeekHrs    809.261655  40.0    32370.466181
+4                    YearsCodePro    829.341895  20.0    16586.837903
+5               JobFactors_Career   2912.724872   0.0        0.000000
+6                 NEWLearn_Decade   3597.702589   0.0        0.000000
+7            JobFactors_TechSavvy   3640.654521   1.0     3640.654521
+8             JobFactors_Idealist   4166.844658   0.0        0.000000
+9           JobFactors_RemoteWork   4357.276258   1.0     4357.276258
+10     JobFactors_WorkEnvironment   4491.376295   0.0        0.000000
+11  JobFactors_FinancialStability   4633.074630   1.0     4633.074630
+12              JobFactors_Domain   4638.335559   0.0        0.000000
+13         JobFactors_Flexibility   5467.473922   0.0        0.000000
+14          JobFactors_FreeLaunch   6442.085779   0.0        0.000000
+15          JobFactors_Itsasecret  11207.558870   0.0        0.000000
+Intercept: -5448.61163866872
+
+
+M4 (Education):
+                                   feature      gewicht  wert  gewicht * wert
+0            JobFactors_FinancialStability -3184.227169   0.0       -0.000000
+1                          Country_Germany -3004.543762   0.0       -0.000000
+2                              JobSeek_Yes -2035.587895   1.0    -2035.587895
+3                LanguageWorkedWith_Python -1693.412132   1.0    -1693.412132
+4                           Country_Canada -1167.125908   0.0       -0.000000
+5                               Age1stCode  -572.221474  12.0    -6866.657687
+6                                      Age   747.233645  21.0    15691.906550
+7                              WorkWeekHrs   818.407615  20.0    16368.152293
+8                             YearsCodePro   829.337853   3.0     2488.013560
+9             PurchaseWhat_StrongInfluence   859.622732   0.0        0.000000
+10                        EdLevel_Doctoral  1131.355093   1.0     1131.355093
+11                           EdLevel_Other  1247.715858   0.0        0.000000
+12  LanguageWorkedWith_Bashshellpowershell  1424.287251   0.0        0.000000
+13                    LanguageWorkedWith_R  1511.521478   0.0        0.000000
+14                   JobFactors_FreeLaunch  4438.530800   0.0        0.000000
+Intercept: 7171.9486213802265
+
+
